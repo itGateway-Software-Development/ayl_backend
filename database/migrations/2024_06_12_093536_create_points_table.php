@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('points', function (Blueprint $table) {
             $table->id();
-            $table->enum('type', ['in', 'out']);
+            $table->string('type', 20);
             $table->string('name', 200);
             $table->text('reason');
             $table->integer('points')->default(0);

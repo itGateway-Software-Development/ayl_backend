@@ -24,3 +24,7 @@ Route::group(['middleware' => ['auth:sanctum'], 'prefix' => '/v1'], function() {
         return response()->json(['message' => 'success']);
     });
 });
+
+Route::get('/v1/products', function() {
+    return 'products';
+});
