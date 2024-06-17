@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,11 +21,7 @@ Route::post('/v1/login', [AuthController::class, 'login']);
 Route::group(['middleware' => ['auth:sanctum'], 'prefix' => '/v1'], function() {
     Route::post('/logout', [AuthController::class, 'logout']);
 
-    Route::get('/test', function() {
-        return response()->json(['message' => 'success']);
-    });
 });
 
-Route::get('/v1/products', function() {
-    return 'products';
-});
+//order mail
+Route::post('/v1/order', [OrderController::class, 'order']);
