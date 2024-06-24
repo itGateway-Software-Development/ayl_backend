@@ -17,6 +17,7 @@ class UsersSeeder extends Seeder
                 'id' => 1,
                 'name' => 'Admin',
                 'email' => 'admin@admin.com',
+                'phone' => '091111111',
                 'type' => 'system',
                 'password' => bcrypt('Ayl123!@#'),
                 'remember_token' => null,

@@ -44,7 +44,7 @@ class OrderController extends Controller
             Mail::to('lin911460@gmail.com')->send(new OrderMail($mailData));
 
             DB::commit();
-            return response()->json(['message' => 'Form is submitted successfully']);
+            return response()->json(['message' => 'Form is submitted successfully', 'point' => $user->points]);
 
         }catch(\Exception $error) {
             DB::rollBack();

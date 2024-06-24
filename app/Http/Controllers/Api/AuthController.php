@@ -18,13 +18,12 @@ class AuthController extends Controller
         logger($request->all());
         try {
             $user = new User();
-            $user->fill([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'birthday' => $request->birthday,
-                'address' => $request->address
-            ]);
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->phone = $request->phone;
+            $user->password = Hash::make($request->password);
+            $user->birthday = $request->birthday;
+            $user->address = $request->addres;
             $user->save();
 
             $token = $user->createToken('romanticunderwear')->plainTextToken;
