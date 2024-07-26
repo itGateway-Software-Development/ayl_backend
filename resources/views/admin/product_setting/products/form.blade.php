@@ -50,42 +50,42 @@
             <div class="col-6 col-sm-3 col-md-2">
                 <div class="form-group mb-4">
                     <label for="">Medium Stock <span class="text-danger">*</span></label>
-                    <input type="number" min="1" value="0" name="m_size_stock" class="form-control m_size_stock" value="">
+                    <input type="number" min="0" value="0" name="m_size_stock" class="form-control m_size_stock" value="">
                     <span class="text-danger m_size_stock_err"></span>
                 </div>
             </div>
             <div class="col-6 col-sm-3 col-md-2">
                 <div class="form-group mb-4">
                     <label for="">Large Stock <span class="text-danger">*</span></label>
-                    <input type="number" min="1" value="0" name="lg_size_stock" class="form-control lg_size_stock" value="">
+                    <input type="number" min="0" value="0" name="lg_size_stock" class="form-control lg_size_stock" value="">
                     <span class="text-danger lg_size_stock_err"></span>
                 </div>
             </div>
             <div class="col-6 col-sm-3 col-md-2">
                 <div class="form-group mb-4">
                     <label for="">XL Stock <span class="text-danger">*</span></label>
-                    <input type="number" min="1" value="0" name="xl_size_stock" class="form-control xl_size_stock" value="">
+                    <input type="number" min="0" value="0" name="xl_size_stock" class="form-control xl_size_stock" value="">
                     <span class="text-danger xl_size_stock_err"></span>
                 </div>
             </div>
             <div class="col-6 col-sm-3 col-md-2">
                 <div class="form-group mb-4">
                     <label for="">2XL Stock <span class="text-danger">*</span></label>
-                    <input type="number" min="1" value="0" name="xxl_size_stock" class="form-control xxl_size_stock" value="">
+                    <input type="number" min="0" value="0" name="xxl_size_stock" class="form-control xxl_size_stock" value="">
                     <span class="text-danger xxl_size_stock_err"></span>
                 </div>
             </div>
             <div class="col-6 col-sm-3 col-md-2">
                 <div class="form-group mb-4">
                     <label for="">3XL Stock <span class="text-danger">*</span></label>
-                    <input type="number" min="1" value="0" name="xxxl_size_stock" class="form-control xxxl_size_stock" value="">
+                    <input type="number" min="0" value="0" name="xxxl_size_stock" class="form-control xxxl_size_stock" value="">
                     <span class="text-danger xxxl_size_stock_err"></span>
                 </div>
             </div>
             <div class="col-6 col-sm-3 col-md-2">
                 <div class="form-group mb-4">
                     <label for="">4XL Stock <span class="text-danger">*</span></label>
-                    <input type="number" min="1" value="0" name="xxxxl_size_stock" class="form-control xxxxl_size_stock" value="">
+                    <input type="number" min="0" value="0" name="xxxxl_size_stock" class="form-control xxxxl_size_stock" value="">
                     <span class="text-danger xxxxl_size_stock_err"></span>
                 </div>
             </div>
