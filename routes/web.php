@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\PointController;
+use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\UserController;
@@ -56,6 +57,13 @@ Route::group(['middleware' => ['auth', 'system-user', 'prevent-back-history'], '
         Route::get('/categories-list', [CategoryController::class, 'getCategoryList']);
         Route::post('/categories/update-data/{category}', [CategoryController::class, 'updateData']);
         Route::resource('categories', CategoryController::class);
+
+        //product
+        Route::get('/products-list', [ProductController::class, 'getProductList']);
+        Route::post('/products/storeMedia', [ProductController::class, 'storeMedia'])->name('products.storeMedia');
+        Route::post('/products/deleteMedia', [ProductController::class, 'deleteMedia'])->name('products.deleteMedia');
+        Route::post('/products/update-data/{product}', [ProductController::class, 'updateData']);
+        Route::resource('products', ProductController::class);
     });
 
 });

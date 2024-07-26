@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreSeriesRequest;
 use App\Http\Requests\Admin\UpdateSeriesRequest;
+use App\Models\Category;
 use App\Models\Series;
 use Illuminate\Http\Request;
 use DataTables;
@@ -16,15 +17,25 @@ class SeriesController extends Controller
      */
     public function index()
     {
-        return view('admin.product_setting.series.index');
+        $categories = Category::all();
+
+        return view('admin.product_setting.series.index', compact('categories'));
     }
 
     public function getSeriesList() {
-        $data = Series::query();
+        $data = Series::with('category');
 
         return Datatables::of($data)
             ->editColumn('plus-icon', function ($each) {
                 return null;
+            })
+            ->editColumn('category_id', function($each) {
+                return $each->category->name;
+            })
+            ->filterColumn('category_id', function($query, $keyword) {
+                $query->whereHas('category', function($q) use ($keyword) {
+                    $q->where('name', 'like', "%$keyword%");
+                });
             })
             ->addColumn('action', function ($each) {
                 $show_icon = '';
@@ -46,7 +57,9 @@ class SeriesController extends Controller
      */
     public function create()
     {
-        return view('admin.product_setting.series.create');
+        $categories = Category::all();
+
+        return view('admin.product_setting.series.create', compact('categories'));
     }
 
     /**
@@ -57,6 +70,7 @@ class SeriesController extends Controller
         try {
             $series = new Series();
             $series->name = $request->series_name;
+            $series->category_id = $request->category_id;
             $series->save();
 
             session()->flash('success', 'Successfully Created');
@@ -90,6 +104,7 @@ class SeriesController extends Controller
     public function updateData(UpdateSeriesRequest $request, Series $series)
     {
         $series->name = $request->series_name;
+        $series->category_id = $request->category_id;
         $series->save();
 
         return response()->json(['status' => 'success']);

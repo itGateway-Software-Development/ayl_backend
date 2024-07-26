@@ -29,7 +29,7 @@
                                 style="font-size: 12px; background: rgb(27, 199, 170);">Disselect
                                 All</span>
                         </div>
-                        <select name="permissions[]" id="permissions" class="select2 form-control" multiple="multiple"
+                        <select name="permissions[]" id="permissions" class="form-control" multiple="multiple"
                             data-placeholder="--- Please Select ---">
                             @foreach ($permissions as $id => $permission)
                                 <option value="{{ $permission->name }}"
@@ -51,5 +51,12 @@
 
 @section('scripts')
     {!! JsValidator::formRequest('App\Http\Requests\Admin\StoreRoleRequest', '#role_create') !!}
-
+    <script>
+        $(document).ready(function() {
+            $('#permissions').select2({
+                theme: "bootstrap-5",
+                placeholder: $(this).data('placeholder'),
+            })
+        })
+    </script>
 @endsection

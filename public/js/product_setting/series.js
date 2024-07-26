@@ -3,6 +3,12 @@
 $(document).ready(function() {
     let edit_id = null;
 
+    $('#category_id').select2({
+        theme: "bootstrap-5",
+        placeholder: $(this).data('placeholder'),
+        dropdownParent: $('#category_select')
+    })
+
     const table = new DataTable('#DataTable', {
         processing: true,
         responsive: true,
@@ -15,6 +21,10 @@ $(document).ready(function() {
             {
                 data: 'name',
                 name: 'name'
+            },
+            {
+                data: 'category_id',
+                name: 'category_id'
             },
             {
                 data: 'action',
@@ -41,6 +51,7 @@ $(document).ready(function() {
             success: function(res) {
                 edit_id = res.series.id;
                 $('.series_name').val(res.series.name);
+                $('.category_id').val(res.series.category_id).trigger('change')
             }
         })
     })
@@ -50,7 +61,8 @@ $(document).ready(function() {
         e.preventDefault();
 
         let names = [
-            "series_name"
+            "series_name",
+            "category_id"
         ];
 
         let err = [];
@@ -129,7 +141,8 @@ $(document).ready(function() {
         e.preventDefault();
 
         let names = [
-            "series_name"
+            "series_name",
+            "category_id"
         ];
 
         let err = [];
@@ -207,13 +220,8 @@ $(document).ready(function() {
 
         let id = $(this).data('id');
 
-        Swal.fire({
-            title: 'Are you sure to delete ?',
-            showCancelButton: true,
-            confirmButtonText: 'Confirm',
-            denyButtonText: `Don't save`,
-        }).then((result) => {
-            if (result.isConfirmed) {
+        ask_delete().then(result => {
+            if(result.isConfirmed) {
                 $.ajax({
                     url: "/admin/product_setting/series/" + id,
                     type: "DELETE",

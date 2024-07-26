@@ -35,7 +35,7 @@
                                 style="font-size: 12px; background: rgb(27, 199, 170);">Disselect
                                 All</span>
                         </div>
-                        <select name="roles[]" id="roles" class="select2 form-control" multiple="multiple">
+                        <select name="roles[]" id="roles" class="select2 form-control" multiple="multiple" data-placeholder="--Please Select---">
                             @foreach ($roles as $id => $role)
                                 <option value="{{ $role }}"
                                     {{ in_array($role, old('roles', [])) ? 'selected' : '' }}>
@@ -57,4 +57,12 @@
 @section('scripts')
     {!! JsValidator::formRequest('App\Http\Requests\Admin\StoreUserRequest', '#user_create') !!}
 
+    <script>
+        $(document).ready(function() {
+            $('#roles').select2({
+                theme: "bootstrap-5",
+                placeholder: $(this).data('placeholder'),
+            })
+        })
+    </script>
 @endsection

@@ -47,6 +47,9 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/plug-ins/1.10.13/features/mark.js/datatables.mark.min.css">
 
+    {{-- dropzone  --}}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet" />
+
     {{-- select2  --}}
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet"
@@ -147,6 +150,9 @@
     {{-- select 2  --}}
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
+    {{-- dropzone  --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
+
     <script src="{{asset('js/global.js')}}"></script>
 
 
@@ -176,10 +182,10 @@
             })
 
             //select 2
-            $('.select2').select2({
-                theme: "bootstrap-5",
-                placeholder: $(this).data('placeholder'),
-            });
+            // $('.select2').select2({
+            //     theme: "bootstrap-5",
+            //     placeholder: $(this).data('placeholder'),
+            // });
 
             $(document).on('click', '.select-all', function() {
                 $('.select2 > option').prop("selected", true);

@@ -57,5 +57,12 @@
 
 @section('scripts')
     {!! JsValidator::formRequest('App\Http\Requests\Admin\UpdateUserRequest', '#user_edit') !!}
-
+    <script>
+        $(document).ready(function() {
+            $('#roles').select2({
+                theme: "bootstrap-5",
+                placeholder: $(this).data('placeholder'),
+            })
+        })
+    </script>
 @endsection

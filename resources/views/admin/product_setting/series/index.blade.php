@@ -19,6 +19,7 @@
                 <thead>
                     <th class="no-sort"></th>
                     <th>Name</th>
+                    <th>Category</th>
                     <th class="no-sort text-nowrap">Action</th>
                 </thead>
                 <tbody>

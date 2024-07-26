@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\V1\ProductController;
+use App\Http\Controllers\Api\V1\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,5 +25,14 @@ Route::group(['middleware' => ['auth:sanctum'], 'prefix' => '/v1'], function() {
 
 });
 
-//order mail
-Route::post('/v1/order', [OrderController::class, 'order']);
+//public routes
+Route::group(['prefix' => 'v1'], function() {
+    //category routes
+    Route::get('categories', [CategoryController::class, 'index']);
+
+    //product routes
+    Route::get('products', [ProductController::class, 'index']);
+
+    //order mail
+    Route::post('order', [OrderController::class, 'order']);
+});

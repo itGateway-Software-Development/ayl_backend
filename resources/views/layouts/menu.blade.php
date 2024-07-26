@@ -77,22 +77,22 @@
         </li>
         <li class="menu-item {{ request()->is('admin/product_setting/*') ? 'active open' : '' }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class='menu-icon tf-icons bx bx-cog'></i>
+                <i class='menu-icon tf-icons bx bx-package'></i>
                 <div data-i18n="Product Settings">Product Settings</div>
             </a>
             <ul class="menu-sub">
-                <li class="menu-item {{ request()->is('admin/product_setting/series') || request()->is('admin/product_setting/series/*') ? 'active open' : '' }}">
-                    <a href="{{route('admin.series.index')}}" class="menu-link">
-                        <div data-i18n="Series">Series</div>
-                    </a>
-                </li>
                 <li class="menu-item {{ request()->is('admin/product_setting/categories') || request()->is('admin/product_setting/categories/*') ? 'active open' : '' }}">
                     <a href="{{route('admin.categories.index')}}" class="menu-link">
                         <div data-i18n="Categories">Categories</div>
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a href="pages-account-settings-connections.html" class="menu-link">
+                <li class="menu-item {{ request()->is('admin/product_setting/series') || request()->is('admin/product_setting/series/*') ? 'active open' : '' }}">
+                    <a href="{{route('admin.series.index')}}" class="menu-link">
+                        <div data-i18n="Series">Series</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ request()->is('admin/product_setting/products') || request()->is('admin/product_setting/products/*') ? 'active open' : '' }}">
+                    <a href="{{route('admin.products.index')}}" class="menu-link">
                         <div data-i18n="Products">Products</div>
                     </a>
                 </li>

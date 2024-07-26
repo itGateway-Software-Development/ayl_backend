@@ -64,6 +64,11 @@
     margin-right: 0.4rem !important;
 }
 
+.dropzone {
+    border: 2px solid #e8ebf3 !important;
+    border-radius: 10px !important;
+}
+
 /* icon of page */
 
 .card-head-icon {

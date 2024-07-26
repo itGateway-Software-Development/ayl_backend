@@ -52,6 +52,11 @@
     {!! JsValidator::formRequest('App\Http\Requests\Admin\UpdateRoleRequest', '#role_edit') !!}
     <script>
         $(document).ready(function() {
+            $('#permissions').select2({
+                theme: "bootstrap-5",
+                placeholder: $(this).data('placeholder'),
+            })
+
             $(document).on('click', '.select-all', function() {
                 $('.select2 > option').prop("selected", true);
                 $('.select2 > option').trigger("change");

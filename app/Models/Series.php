@@ -9,4 +9,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Series extends Model
 {
     use HasFactory, SoftDeletes;
+
+    public function category() {
+        return $this->belongsTo(Category::class);
+    }
 }

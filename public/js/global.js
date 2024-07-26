@@ -60,5 +60,22 @@ let ask_confirm = (title = "Are you sure?", btn = "Yes, save it!") => {
     });
 };
 
+//Delete Message
+let ask_delete = (title = "Are you sure to delete?", btn = "Yes, delete it!") => {
+    return Swal.fire({
+        title: title,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: btn,
+        customClass: {
+            confirmButton: "btn btn-primary me-3 waves-effect waves-light",
+            cancelButton: "btn btn-outline-secondary waves-effect",
+        },
+        buttonsStyling: false,
+        backdrop: true,
+        allowOutsideClick: () => !Swal.isLoading(),
+    });
+};
+
 
 

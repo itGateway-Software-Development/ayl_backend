@@ -13,8 +13,16 @@ $(document).ready(function() {
                 name: 'plus-icon'
             },
             {
+                data: 'image',
+                data: 'image',
+            },
+            {
                 data: 'name',
                 name: 'name'
+            },
+            {
+                data: 'description',
+                data: 'description',
             },
             {
                 data: 'action',
@@ -41,9 +49,24 @@ $(document).ready(function() {
             success: function(res) {
                 edit_id = res.category.id;
                 $('.category_name').val(res.category.name);
+                $('.description').val(res.category.description);
+                $('#category_preview_img').attr('src', res.category.media[0].original_url).width(150).height(150)
             }
         })
     })
+
+    // show preview image
+    $(document).on('change', '.image', function(e) {
+        if (this.files && this.files[0]) {
+            let reader = new FileReader();
+
+            reader.onload = function(e) {
+                $('#category_preview_img').attr('src', e.target.result).width(150).height(150);
+            }
+
+            reader.readAsDataURL(this.files[0]);
+        }
+    });
 
     //submit create form
     $(document).on('submit', '#category_create_form', function(e) {
@@ -51,6 +74,8 @@ $(document).ready(function() {
 
         let names = [
             "category_name",
+            "image",
+            "description"
         ];
 
         let err = [];
@@ -128,7 +153,8 @@ $(document).ready(function() {
     $(document).on('submit', '#category_edit_form', function(e) {
         e.preventDefault();
         let names = [
-            "category_name"
+            "category_name",
+            "description"
         ];
 
         let err = [];
@@ -165,6 +191,7 @@ $(document).ready(function() {
                         },
                         success: function (res) {
                             if (res.status == "success") {
+                                toast_success('Success !');
                                 $('#categoryModal').modal('hide');
                                 table.ajax.reload();
                             }
@@ -206,13 +233,8 @@ $(document).ready(function() {
 
         let id = $(this).data('id');
 
-        Swal.fire({
-            title: 'Are you sure to delete ?',
-            showCancelButton: true,
-            confirmButtonText: 'Confirm',
-            denyButtonText: `Don't save`,
-        }).then((result) => {
-            if (result.isConfirmed) {
+        ask_delete().then(result => {
+            if(result.isConfirmed) {
                 $.ajax({
                     url: "/admin/product_setting/categories/" + id,
                     type: "DELETE",

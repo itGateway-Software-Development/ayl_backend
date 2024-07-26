@@ -28,6 +28,14 @@ class CategoryController extends Controller
             ->editColumn('plus-icon', function ($each) {
                 return null;
             })
+            ->editColumn('image', function($each) {
+                foreach($each->getMedia('category_image') as $image) {
+                    $filePath = $image->getUrl();
+                    $image = "<img src='$filePath' width='120' height='120' style='object-fit:cover;'/>";
+                }
+
+                return $image;
+            })
             ->addColumn('action', function ($each) {
                 $edit_icon = '';
                 $del_icon = '';
@@ -38,7 +46,7 @@ class CategoryController extends Controller
 
                 return '<div class="action-icon">' . $edit_icon . $del_icon . '</div>';
             })
-            ->rawColumns(['role', 'action'])
+            ->rawColumns(['image', 'role', 'action'])
             ->make(true);
     }
 
@@ -60,7 +68,13 @@ class CategoryController extends Controller
         try {
             $category = new Category();
             $category->name = $request->category_name;
+            $category->description = $request->description;
             $category->save();
+
+            if ($request->file('image')) {
+                $fileName = uniqid() . $request->file('image')->getClientOriginalName();
+                $category->addMedia($request->file('image'))->usingFileName($fileName)->toMediaCollection('category_image');
+            }
 
             session()->flash('success', 'Successfully Created');
             return 'success';
@@ -84,7 +98,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return response()->json(['category' => $category]);
+        return response()->json(['category' => $category->load('media')]);
     }
 
     /**
@@ -93,7 +107,20 @@ class CategoryController extends Controller
     public function updateData(UpdateCategoryRequest $request, Category $category)
     {
         $category->name = $request->category_name;
-        $category->save();
+        $category->description = $request->description;
+        $category->update();
+
+        if ($request->file('image')) {
+            //delete old file
+            if (count($category->categoryImage()) > 0) {
+                foreach ($category->categoryImage() as $media) {
+                    $media->delete();
+                }
+            }
+
+            $fileName = uniqid() . $request->file('image')->getClientOriginalName();
+            $category->addMedia($request->file('image'))->usingFileName($fileName)->toMediaCollection('category_image');
+        }
 
         return response()->json(['status' => 'success']);
     }

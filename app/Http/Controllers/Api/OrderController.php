@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Mail;
 class OrderController extends Controller
 {
     public function order(Request $request) {
-        logger($request->all());
         DB::beginTransaction();
         try{
             $user = User::findOrFail($request->user_id);
