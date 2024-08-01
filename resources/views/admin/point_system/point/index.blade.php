@@ -16,18 +16,20 @@
                 <thead>
                     <th class="no-sort"></th>
                     <th>Customers</th>
-                    <th>Total Points</th>
+                    <th>Phone</th>
+                    <th>Created Date</th>
+                    <th class="no-sort">Total Points</th>
                     <th class="no-sort text-nowrap">Action</th>
                 </thead>
                 <tbody>
                 </tbody>
             </table>
         </div>
-        <div class="modal fade" id="seriesModal" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-xl" role="document">
+        <div class="modal fade" id="pointDetailModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel4">Edit Series</h4>
+                    <h4 class="modal-title fs-6 fw-bold" id="exampleModalLabel4">Point History</h4>
                     <button
                     type="button"
                     class="btn-close"
@@ -35,7 +37,7 @@
                     aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    @include('admin.product_setting.series.form')
+                    @include('admin.point_system.point.detail')
                 </div>
                 </div>
             </div>
@@ -45,5 +47,5 @@
 @endsection
 
 @section('scripts')
-    <script src="{{asset('js/product_setting/series.js')}}"></script>
+    <script src="{{asset('js/point/point.js')}}"></script>
 @endsection

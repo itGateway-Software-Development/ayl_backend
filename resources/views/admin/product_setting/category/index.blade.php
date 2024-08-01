@@ -31,7 +31,7 @@
             <div class="modal-dialog modal-xl" role="document">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel4">Edit Series</h4>
+                    <h4 class="modal-title" id="exampleModalLabel4">Edit Category</h4>
                     <button
                     type="button"
                     class="btn-close"

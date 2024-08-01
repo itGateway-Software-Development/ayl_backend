@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\V1;
 
 use App\Models\Point;
 use App\Models\User;
@@ -15,7 +15,6 @@ class AuthController extends Controller
 {
     public function register(RegisterRequest $request) {
         DB::beginTransaction();
-        logger($request->all());
         try {
             $user = new User();
             $user->name = $request->name;
@@ -23,7 +22,7 @@ class AuthController extends Controller
             $user->phone = $request->phone;
             $user->password = Hash::make($request->password);
             $user->birthday = $request->birthday;
-            $user->address = $request->addres;
+            $user->address = $request->address;
             $user->save();
 
             $token = $user->createToken('romanticunderwear')->plainTextToken;

@@ -44,7 +44,7 @@ class ProductController extends Controller
                 foreach ($each->getMedia('product_detail_images') as $file) {
                     if ($index < 2) {
                         $filePath = $file->getUrl();
-                        $style = "width: 60px; height: 60px; display: flex; justify-content:center; align-items:center ;border-radius: 100%; object-fit: cover; border: 1px solid #333;";
+                        $style = "width: 50px; height: 50px; display: flex; justify-content:center; align-items:center ;border-radius: 100%; object-fit: cover; border: 1px solid #333;";
                         $style .= $index == 0 ? '' : 'margin-left: -15px;';
 
                         $image .= "<img src='$filePath' style='$style'/>";

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\V1;
 
 use App\Models\User;
 use App\Models\Point;
@@ -14,9 +14,12 @@ class OrderController extends Controller
 {
     public function order(Request $request) {
         DB::beginTransaction();
+        logger('gg');
+        logger(json_decode($request->products, true));
+        logger('gg');
         try{
-            $user = User::findOrFail($request->user_id);
-
+            $user = User::findOrFail($request->id);
+            logger($request->all());
             if($user) {
                 $point = new Point();
                 $point->type = 'out';

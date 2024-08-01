@@ -14,4 +14,9 @@ class ProductController extends Controller
 
         return response()->json(['products' => ProductResource::collection($products)]);
     }
+
+    public function show(Product $product) {
+
+        return response()->json(['product' => new ProductResource($product->load('media'))]);
+    }
 }
