@@ -19,7 +19,6 @@ class OrderController extends Controller
         logger('gg');
         try{
             $user = User::findOrFail($request->id);
-            logger($request->all());
             if($user) {
                 $point = new Point();
                 $point->type = 'out';
@@ -43,7 +42,7 @@ class OrderController extends Controller
                 'subTotal'=>$request->subTotal,
             ];
 
-            Mail::to('lin911460@gmail.com')->send(new OrderMail($mailData));
+            Mail::to('aylorder@gmail.com')->send(new OrderMail($mailData));
 
             DB::commit();
             return response()->json(['message' => 'Form is submitted successfully', 'point' => $user->points]);
