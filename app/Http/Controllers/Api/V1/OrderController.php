@@ -14,9 +14,6 @@ class OrderController extends Controller
 {
     public function order(Request $request) {
         DB::beginTransaction();
-        logger('gg');
-        logger(json_decode($request->products, true));
-        logger('gg');
         try{
             $user = User::findOrFail($request->id);
             if($user) {
@@ -39,7 +36,7 @@ class OrderController extends Controller
                 'deliveryPrice'=>$request->deliveryPrice,
                 'pointsUse'=>$request->pointsUse,
                 'totalPoint'=>$request->totalPoint,
-                'subTotal'=>$request->subTotal,
+                'subTotal'=>$request->totalPrice,
             ];
 
             Mail::to('aylorder@gmail.com')->send(new OrderMail($mailData));
