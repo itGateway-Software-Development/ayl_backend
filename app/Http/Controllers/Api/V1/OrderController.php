@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Models\Order;
 use App\Models\User;
 use App\Models\Point;
 use App\Mail\OrderMail;
@@ -14,8 +15,9 @@ class OrderController extends Controller
 {
     public function order(Request $request) {
         DB::beginTransaction();
+        logger($request->all());
         try{
-            $user = User::findOrFail($request->id);
+            $user = User::find($request->id);
             if($user) {
                 $point = new Point();
                 $point->type = 'out';
@@ -26,6 +28,20 @@ class OrderController extends Controller
                 $point->user_id = $user->id;
                 $point->save();
             }
+
+            if($request->file('slip_image')) {
+                $imageName = $request->file('slip_image')->getClientOriginalName();
+                $request->file('slip_image')->storeAs('public/images', $imageName);
+
+                $order = new Order();
+                $order->slip_image = $imageName;
+                $order->save();
+
+            } else {
+                $imageName = null;
+            }
+
+
             $mailData = [
                 'name'=>$request->name,
                 'phone'=>$request->phone,
@@ -37,12 +53,14 @@ class OrderController extends Controller
                 'pointsUse'=>$request->pointsUse,
                 'totalPoint'=>$request->totalPoint,
                 'subTotal'=>$request->totalPrice,
+                'slip_image' => $imageName ? url('storage/images/'.$imageName) : '',
             ];
 
-            Mail::to('aylorder@gmail.com')->send(new OrderMail($mailData));
+
+            Mail::to('lin911460@gmail.com')->send(new OrderMail($mailData));
 
             DB::commit();
-            return response()->json(['message' => 'Form is submitted successfully', 'point' => $user->points]);
+            return response()->json(['message' => 'Form is submitted successfully', 'point' => $user ? $user->points : 0]);
 
         }catch(\Exception $error) {
             DB::rollBack();

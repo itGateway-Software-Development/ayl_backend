@@ -77,6 +77,17 @@
         tfoot tr td {
             font-weight: bold;
         }
+
+        .photo {
+            margin-top: 50px;
+            width: 100%;
+            border:none;
+        }
+
+        .photo img {
+            max-width: 500px;
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body>
@@ -134,6 +145,12 @@
                 </tr>
             </tfoot>
         </table>
+
+        <div class="photo">
+            @if($data['slip_image'])
+                <img src="{{$data['slip_image']}}" alt="">
+            @endif
+        </div>
     </div>
 </body>
 </html>
