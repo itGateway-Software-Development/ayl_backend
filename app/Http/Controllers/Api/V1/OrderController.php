@@ -15,7 +15,6 @@ class OrderController extends Controller
 {
     public function order(Request $request) {
         DB::beginTransaction();
-        logger($request->all());
         try{
             $user = User::find($request->id);
             if($user) {
@@ -57,7 +56,7 @@ class OrderController extends Controller
             ];
 
 
-            Mail::to('lin911460@gmail.com')->send(new OrderMail($mailData));
+            Mail::to('aylorder@gmail.com')->send(new OrderMail($mailData));
 
             DB::commit();
             return response()->json(['status' => 'success', 'message' => 'Form is submitted successfully', 'point' => $user ? $user->points : 0]);
