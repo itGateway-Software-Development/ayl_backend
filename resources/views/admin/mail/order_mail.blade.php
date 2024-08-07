@@ -80,12 +80,12 @@
 
         .photo {
             margin-top: 50px;
-            width: 100%;
+            max-width: 500px;
             border:none;
         }
 
         .photo img {
-            max-width: 500px;
+            max-width: 100%;
             border-radius: 10px;
         }
     </style>
