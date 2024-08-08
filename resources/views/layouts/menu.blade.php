@@ -98,5 +98,18 @@
                 </li>
             </ul>
         </li>
+        <li class="menu-item {{ request()->is('admin/order_setting/*') ? 'active open' : '' }}">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class='menu-icon tf-icons bx bxs-truck'></i>
+                <div data-i18n="Product Settings">Orders Setting</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item {{ request()->is('admin/order_setting/orders') || request()->is('admin/order_setting/orders/*') ? 'active open' : '' }}">
+                    <a href="{{route('admin.orders.index')}}" class="menu-link">
+                        <div data-i18n="Orders">Orders</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
     </ul>
 </aside>

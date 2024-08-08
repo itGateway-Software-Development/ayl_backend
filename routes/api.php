@@ -22,7 +22,7 @@ Route::post('/v1/login', [AuthController::class, 'login']);
 
 Route::group(['middleware' => ['auth:sanctum'], 'prefix' => '/v1'], function() {
     Route::post('/logout', [AuthController::class, 'logout']);
-
+    Route::post('/change-password', [AuthController::class, 'changePassword']);
 });
 
 //public routes
@@ -36,4 +36,5 @@ Route::group(['prefix' => 'v1'], function() {
 
     //order mail
     Route::post('order', [OrderController::class, 'order']);
+    Route::get('/orders/{order}', [OrderController::class, 'show']);
 });

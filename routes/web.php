@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\PointController;
 use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Support\Facades\Route;
@@ -64,6 +65,14 @@ Route::group(['middleware' => ['auth', 'system-user', 'prevent-back-history'], '
         Route::post('/products/deleteMedia', [ProductController::class, 'deleteMedia'])->name('products.deleteMedia');
         Route::post('/products/update-data/{product}', [ProductController::class, 'updateData']);
         Route::resource('products', ProductController::class);
+    });
+
+    //order module
+    Route::group(['prefix' => 'order_setting'], function() {
+        //orders
+        Route::get('/orders-list', [OrderController::class, 'getOrders']);
+        Route::get('/order-confirm', [OrderController::class, 'confirmOrder']);
+        Route::resource('orders', OrderController::class);
     });
 
 });

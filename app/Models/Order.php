@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
+
+    protected $casts = [
+        'order_items' => 'array',
+    ];
+
+    public function customer() {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

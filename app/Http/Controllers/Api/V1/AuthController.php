@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Models\Point;
+use App\Http\Requests\Api\ChangePasswordRequest;
 use App\Models\User;
+use App\Models\Order;
+use App\Models\Point;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Resources\OrderResource;
 use App\Http\Requests\Api\LoginRequest;
 use Illuminate\Support\Facades\Request;
 use App\Http\Requests\Api\RegisterRequest;
@@ -37,13 +40,14 @@ class AuthController extends Controller
             $point->save();
 
             $point = Point::where('user_id', $user->id)->latest()->first()->total;
-
+            $point_history = Point::where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
 
             $response = [
                 'message' => 'success register',
                 'user' => $user,
                 'point' => $point,
-                'token' => $token
+                'token' => $token,
+                'point_history' => $point_history
             ];
 
             DB::commit();
@@ -67,12 +71,19 @@ class AuthController extends Controller
         $token = $user->createToken('romanticunderwear')->plainTextToken;
 
         $point = Point::where('user_id', $user->id)->latest()->first()->total;
+        $point_history = Point::where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
+
+        if($user) {
+            $order = Order::where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
+        }
 
         $response = [
             'message' => 'success login',
             'user' => $user,
             'point' => $point,
-            'token' => $token
+            'token' => $token,
+            'point_history' => $point_history,
+            'order' => $user ? OrderResource::collection($order->load('customer')) : null
         ];
 
         return response()->json(['response' => $response], 201);
@@ -82,5 +93,17 @@ class AuthController extends Controller
         auth()->user()->tokens()->delete();
 
         return response()->json(['message' => 'success logout']);
+    }
+
+    public function changePassword(ChangePasswordRequest $request) {
+        $user = User::find($request->id);
+        if(!$user || !Hash::check($request->input('current_password'), $user->password)) {
+            return response()->json(['status' => 'error', 'message' => 'Current password is not correct'], 401);
+        }
+
+        $user->password = Hash::make($request->password);
+        $user->update();
+
+        return response()->json(['status' => 'success', 'message' => 'Password changed']);
     }
 }
