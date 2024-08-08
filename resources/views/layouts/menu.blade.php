@@ -75,7 +75,7 @@
                 </li>
             </ul>
         </li>
-        <li class="menu-item {{ request()->is('admin/product_setting/*') ? 'active open' : '' }}">
+        {{-- <li class="menu-item {{ request()->is('admin/product_setting/*') ? 'active open' : '' }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class='menu-icon tf-icons bx bx-package'></i>
                 <div data-i18n="Product Settings">Product Settings</div>
@@ -97,7 +97,7 @@
                     </a>
                 </li>
             </ul>
-        </li>
+        </li> --}}
         <li class="menu-item {{ request()->is('admin/order_setting/*') ? 'active open' : '' }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class='menu-icon tf-icons bx bxs-truck'></i>
