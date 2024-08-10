@@ -33,6 +33,7 @@ Route::group(['prefix' => 'v1'], function() {
     //product routes
     Route::get('products', [ProductController::class, 'index']);
     Route::get('products/{product}', [ProductController::class, 'show']);
+    Route::get('get-random-products', [ProductController::class, 'getRandomProducts']);
 
     //order mail
     Route::post('order', [OrderController::class, 'order']);

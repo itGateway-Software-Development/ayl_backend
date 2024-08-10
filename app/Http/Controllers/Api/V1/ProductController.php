@@ -19,4 +19,10 @@ class ProductController extends Controller
 
         return response()->json(['product' => new ProductResource($product->load('media'))]);
     }
+
+    public function getRandomProducts() {
+        $products = Product::with('media', 'series')->inRandomOrder()->take(4)->get();
+
+        return response()->json(['products' => ProductResource::collection($products)]);
+    }
 }
