@@ -15,9 +15,14 @@ class ProductResource extends JsonResource
     public function toArray(Request $request): array
     {
         $mainImage = $this->media->firstWhere('collection_name', 'product_main_image');
-        $images = $this->media->where('collection_name', '!=', 'product_main_image')->map(function($media) {
-            return $media->original_url;
-        });
+        $images = $this->media
+        ->where('collection_name', '!=', 'product_main_image')
+        ->map(function($media, $index) {
+            return [
+                'id' => 'p-' . $index,
+                'url' => $media->original_url
+            ];
+        })->values();
         return [
             'id' => $this->id,
             'name' => $this->name,
