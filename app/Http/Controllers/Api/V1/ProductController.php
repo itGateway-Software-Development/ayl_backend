@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 class ProductController extends Controller
 {
     public function index() {
-        $products = Product::with('media')->get();
+        $products = Product::with('media', 'series')->get();
 
         return response()->json(['products' => ProductResource::collection($products)]);
     }
