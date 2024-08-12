@@ -92,13 +92,15 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: "/admin/roles/" + id,
+                            url: "/admin/users/" + id,
                             type: "DELETE",
                             data: {
                                 _token: "{{ csrf_token() }}"
                             },
-                            success: function() {
-                                table.ajax.reload();
+                            success: function(res) {
+                                if(res == 'success') {
+                                    table.ajax.reload();
+                                }
                             }
                         })
                     }
