@@ -85,9 +85,13 @@ class ProductController extends Controller
                 // if (auth()->user()->can('photo_gallery_show')) {
                 // }
 
-                $edit_icon = '<a href="#" data-bs-toggle="modal" data-bs-target="#productModal" data-route="'.route('admin.products.edit', $each->id).'" class="text-info edit-product me-3"><i class="bx bx-edit fs-4" ></i></a>';
+                if(auth()->user()->can('product_edit')) {
+                    $edit_icon = '<a href="#" data-bs-toggle="modal" data-bs-target="#productModal" data-route="'.route('admin.products.edit', $each->id).'" class="text-info edit-product me-3"><i class="bx bx-edit fs-4" ></i></a>';
+                }
 
-                $del_icon = '<a href="" class="text-danger delete-btn" data-id="' . $each->id . '"><i class="bx bxs-trash-alt fs-4" ></i></a>';
+                if(auth()->user()->can('product_delete')) {
+                    $del_icon = '<a href="" class="text-danger delete-btn" data-id="' . $each->id . '"><i class="bx bxs-trash-alt fs-4" ></i></a>';
+                }
 
                 return '<div class="action-icon">' . $show_icon . $edit_icon . $del_icon . '</div>';
             })

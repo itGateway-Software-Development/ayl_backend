@@ -10,9 +10,11 @@
     <div class="card mt-3">
         <div class="d-flex justify-content-between m-3">
             <span>Category List</span>
-            <a href="{{ route('admin.categories.create') }}" class="btn btn-primary text-decoration-none text-white"><i
-                class='bx bxs-plus-circle me-2'></i>
-            Create New Category</a>
+            @can('category_create')
+                <a href="{{ route('admin.categories.create') }}" class="btn btn-primary text-decoration-none text-white"><i
+                    class='bx bxs-plus-circle me-2'></i>
+                Create New Category</a>
+            @endcan
         </div>
         <div class="card-body">
             <table class="table table-bordered table-striped w-100" id="DataTable">

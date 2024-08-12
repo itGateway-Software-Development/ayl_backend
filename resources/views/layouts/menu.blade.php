@@ -62,54 +62,70 @@
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Pages</span>
         </li>
-        <li class="menu-item {{ request()->is('admin/point_system/*') ? 'active open' : '' }}">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class='menu-icon bx bxs-gift'></i>
-                <div data-i18n="Point Settings">Point System</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item {{ request()->is('admin/point_system/points') || request()->is('admin/point_system/points/*') ? 'active open' : '' }}">
-                    <a href="{{route('admin.points.index')}}" class="menu-link">
-                        <div data-i18n="Points">Points</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="menu-item {{ request()->is('admin/product_setting/*') ? 'active open' : '' }}">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class='menu-icon tf-icons bx bx-package'></i>
-                <div data-i18n="Product Settings">Product Settings</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item {{ request()->is('admin/product_setting/categories') || request()->is('admin/product_setting/categories/*') ? 'active open' : '' }}">
-                    <a href="{{route('admin.categories.index')}}" class="menu-link">
-                        <div data-i18n="Categories">Categories</div>
-                    </a>
-                </li>
-                <li class="menu-item {{ request()->is('admin/product_setting/series') || request()->is('admin/product_setting/series/*') ? 'active open' : '' }}">
-                    <a href="{{route('admin.series.index')}}" class="menu-link">
-                        <div data-i18n="Series">Series</div>
-                    </a>
-                </li>
-                <li class="menu-item {{ request()->is('admin/product_setting/products') || request()->is('admin/product_setting/products/*') ? 'active open' : '' }}">
-                    <a href="{{route('admin.products.index')}}" class="menu-link">
-                        <div data-i18n="Products">Products</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="menu-item {{ request()->is('admin/order_setting/*') ? 'active open' : '' }}">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class='menu-icon tf-icons bx bxs-truck'></i>
-                <div data-i18n="Product Settings">Orders Setting</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item {{ request()->is('admin/order_setting/orders') || request()->is('admin/order_setting/orders/*') ? 'active open' : '' }}">
-                    <a href="{{route('admin.orders.index')}}" class="menu-link">
-                        <div data-i18n="Orders">Orders</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
+
+        @can('point_system_access')
+            <li class="menu-item {{ request()->is('admin/point_system/*') ? 'active open' : '' }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class='menu-icon bx bxs-gift'></i>
+                    <div data-i18n="Point Settings">Point System</div>
+                </a>
+                <ul class="menu-sub">
+                    <li class="menu-item {{ request()->is('admin/point_system/points') || request()->is('admin/point_system/points/*') ? 'active open' : '' }}">
+                        <a href="{{route('admin.points.index')}}" class="menu-link">
+                            <div data-i18n="Points">Points</div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        @endcan
+
+        @can('product_setting_access')
+            <li class="menu-item {{ request()->is('admin/product_setting/*') ? 'active open' : '' }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class='menu-icon tf-icons bx bx-package'></i>
+                    <div data-i18n="Product Settings">Product Settings</div>
+                </a>
+                <ul class="menu-sub">
+                    @can('category_access')
+                        <li class="menu-item {{ request()->is('admin/product_setting/categories') || request()->is('admin/product_setting/categories/*') ? 'active open' : '' }}">
+                            <a href="{{route('admin.categories.index')}}" class="menu-link">
+                                <div data-i18n="Categories">Categories</div>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('series_access')
+                        <li class="menu-item {{ request()->is('admin/product_setting/series') || request()->is('admin/product_setting/series/*') ? 'active open' : '' }}">
+                            <a href="{{route('admin.series.index')}}" class="menu-link">
+                                <div data-i18n="Series">Series</div>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('product_access')
+                        <li class="menu-item {{ request()->is('admin/product_setting/products') || request()->is('admin/product_setting/products/*') ? 'active open' : '' }}">
+                            <a href="{{route('admin.products.index')}}" class="menu-link">
+                                <div data-i18n="Products">Products</div>
+                            </a>
+                        </li>
+                    @endcan
+                </ul>
+            </li>
+        @endcan
+        @can('order_setting_access')
+            <li class="menu-item {{ request()->is('admin/order_setting/*') ? 'active open' : '' }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class='menu-icon tf-icons bx bxs-truck'></i>
+                    <div data-i18n="Product Settings">Orders Setting</div>
+                </a>
+                <ul class="menu-sub">
+                    @can('order_access')
+                        <li class="menu-item {{ request()->is('admin/order_setting/orders') || request()->is('admin/order_setting/orders/*') ? 'active open' : '' }}">
+                            <a href="{{route('admin.orders.index')}}" class="menu-link">
+                                <div data-i18n="Orders">Orders</div>
+                            </a>
+                        </li>
+                    @endcan
+                </ul>
+            </li>
+        @endcan
     </ul>
 </aside>

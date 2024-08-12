@@ -42,9 +42,12 @@ class SeriesController extends Controller
                 $edit_icon = '';
                 $del_icon = '';
 
-                $edit_icon = '<a href="#" data-bs-toggle="modal" data-bs-target="#seriesModal" data-route="'.route('admin.series.edit', $each->id).'" class="text-info edit-series me-3"><i class="bx bx-edit fs-4" ></i></a>';
-
-                $del_icon = '<a href="" class="text-danger delete-btn" data-id="' . $each->id . '"><i class="bx bxs-trash-alt fs-4" ></i></a>';
+                if(auth()->user()->can('series_edit')) {
+                    $edit_icon = '<a href="#" data-bs-toggle="modal" data-bs-target="#seriesModal" data-route="'.route('admin.series.edit', $each->id).'" class="text-info edit-series me-3"><i class="bx bx-edit fs-4" ></i></a>';
+                }
+                if(auth()->user()->can('series_delete')) {
+                    $del_icon = '<a href="" class="text-danger delete-btn" data-id="' . $each->id . '"><i class="bx bxs-trash-alt fs-4" ></i></a>';
+                }
 
                 return '<div class="action-icon">' . $edit_icon . $del_icon . '</div>';
             })
