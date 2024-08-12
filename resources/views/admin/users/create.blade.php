@@ -24,6 +24,12 @@
                         <input type="email" name="email" class="form-control" value="{{ old('email') }}">
                     </div>
                 </div>
+                <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                    <div class="form-group mb-4">
+                        <label for="">Password</label>
+                        <input type="text" name="password" class="form-control" value="{{ old('password') }}">
+                    </div>
+                </div>
                 <div class="col-lg-8 col-md-12 col-sm-12">
                     <div class="form-group">
                         <label for="">Roles <span class="text-muted">(Please Select)</span></label>

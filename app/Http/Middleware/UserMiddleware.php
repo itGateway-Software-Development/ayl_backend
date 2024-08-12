@@ -15,7 +15,7 @@ class UserMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(auth()->check() && auth()->user()->type == 'system') {
+        if(auth()->check() && auth()->user()->type == 'system' || auth()->user()->type == 'system_user') {
             return $next($request);
         }
 
