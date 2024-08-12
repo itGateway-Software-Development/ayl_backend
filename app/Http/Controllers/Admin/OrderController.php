@@ -39,9 +39,10 @@ class OrderController extends Controller
 
             ->editColumn('status', function($each) {
                 $status_btn = '';
+                $order_confirm_status = auth()->user()->can('order_confirm') ? 'status-btn' : '';
 
                 if($each->status == 'pending') {
-                    $status_btn = "<span class='cursor-pointer bg-warning px-3 py-1 status-btn' data-status='pending' data-order_id='$each->id'>".ucwords($each->status)."</span>";
+                    $status_btn = "<span class='cursor-pointer bg-warning px-3 py-1 $order_confirm_status' data-status='pending' data-order_id='$each->id'>".ucwords($each->status)."</span>";
                 } elseif($each->status == 'done') {
                     $status_btn = "<span class='cursor-pointer bg-success px-3 py-1 ' data-status='done'>".ucwords($each->status)."</span>";
                 }
