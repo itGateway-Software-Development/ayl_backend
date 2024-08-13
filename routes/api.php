@@ -34,6 +34,7 @@ Route::group(['prefix' => 'v1'], function() {
     Route::get('products', [ProductController::class, 'index']);
     Route::get('products/{product}', [ProductController::class, 'show']);
     Route::get('get-random-products', [ProductController::class, 'getRandomProducts']);
+    Route::get('search-products', [ProductController::class, 'searchProducts']);
 
     //order mail
     Route::post('order', [OrderController::class, 'order']);

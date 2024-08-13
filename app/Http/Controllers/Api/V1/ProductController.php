@@ -25,4 +25,21 @@ class ProductController extends Controller
 
         return response()->json(['products' => ProductResource::collection($products)]);
     }
+
+    public function searchProducts(Request $request) {
+        $keyword = $request->search;
+
+        if (isset($keyword)) {
+            $products = Product::where('name', 'like', "%$keyword%")
+                                ->orWhere('product_info', 'like', "%$keyword%")
+                                ->orWhereHas('series', function($query) use ($keyword) {
+                                    $query->where('name', 'like', "%$keyword%");
+                                })
+                                ->get();
+        } else {
+            $products = [];
+        }
+
+        return response()->json(['products' => ProductResource::collection($products)]);
+    }
 }
