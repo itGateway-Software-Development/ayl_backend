@@ -118,7 +118,7 @@
             <tbody>
                 @foreach ($data['products'] as $product)
                     <tr>
-                        <td>{{$product['cat']}} - {{ $product['code']}}</td>
+                        <td>{{ $product['code']}}</td>
                         <td>{{$product['size']}}</td>
                         <td>{{$product['color']}}</td>
                         <td>{{$product['quantity']}}</td>

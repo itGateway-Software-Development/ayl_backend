@@ -43,6 +43,30 @@ $(document).ready(function() {
                 name: 'price'
             },
             {
+                data: 'm_size_stock',
+                name: 'm_size_stock'
+            },
+            {
+                data: 'lg_size_stock',
+                name: 'lg_size_stock'
+            },
+            {
+                data: 'xl_size_stock',
+                name: 'xl_size_stock'
+            },
+            {
+                data: 'xxl_size_stock',
+                name: 'xxl_size_stock'
+            },
+            {
+                data: 'xxxl_size_stock',
+                name: 'xxxl_size_stock'
+            },
+            {
+                data: 'xxxxl_size_stock',
+                name: 'xxxxl_size_stock'
+            },
+            {
                 data: 'action',
                 data: 'action',
             }

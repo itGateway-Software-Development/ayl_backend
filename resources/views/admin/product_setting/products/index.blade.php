@@ -26,6 +26,12 @@
                     <th>Name</th>
                     <th class="no-sort">Photos</th>
                     <th>Price</th>
+                    <th>M Size Stock</th>
+                    <th>L Size Stock</th>
+                    <th>XL Size Stock</th>
+                    <th>XXL Size Stock</th>
+                    <th>3XL Size Stock</th>
+                    <th>4XL Size Stock</th>
                     <th class="no-sort text-nowrap">Action</th>
                 </thead>
                 <tbody>
