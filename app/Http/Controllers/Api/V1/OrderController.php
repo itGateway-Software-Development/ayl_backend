@@ -110,8 +110,8 @@ class OrderController extends Controller
             ];
 
 
-            // Mail::to('aylorder@gmail.com')->send(new OrderMail($mailData));
-            Mail::to('lin911460@gmail.com')->send(new OrderMail($mailData));
+            Mail::to('aylorder@gmail.com')->send(new OrderMail($mailData));
+            // Mail::to('lin911460@gmail.com')->send(new OrderMail($mailData));
             // Mail::to('sawsantun147@gmail.com')->send(new OrderMail($mailData));
 
             if($user) {

@@ -89,7 +89,7 @@ $(document).ready(function() {
                     for(const item of order.order_items) {
                         row += `
                         <tr>
-                            <td>${item.cat} - ${item.code}</td>
+                            <td>${item.code}</td>
                             <td>${item.size}</td>
                             <td>${item.color}</td>
                             <td>${item.quantity}</td>
