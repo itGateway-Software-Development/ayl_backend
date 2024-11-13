@@ -54,13 +54,26 @@ $(document).ready(function() {
         let status = $(this).data('status');
         let order_id = $(this).data('order_id');
 
-        ask_confirm("Confirm order ?", "Yes, Confirm").then(result => {
+        ask_confirm("Confirm order ?", "Yes, Confirm", true).then(result => {
             if(result.isConfirmed) {
                 $.ajax({
                     url: "/admin/order_setting/order-confirm",
                     data: {status, order_id},
                     success: function(res) {
                         if(res == 'success') {
+                            toast_success('Order Confirmed !')
+                            table.ajax.reload();
+                        }
+                    }
+                })
+            } else if(result.isDenied) {
+                console.log('g');
+                $.ajax({
+                    url: "/admin/order_setting/order-cancel",
+                    data: {order_id},
+                    success: function(res) {
+                        if(res == 'success') {
+                            toast_success('Order Cancelled !')
                             table.ajax.reload();
                         }
                     }
@@ -79,6 +92,7 @@ $(document).ready(function() {
                     data: {order_id},
                     success: function(res) {
                         if(res == 'success') {
+                            toast_success('Order Cancelled !')
                             table.ajax.reload();
                         }
                     }

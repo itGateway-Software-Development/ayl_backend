@@ -44,15 +44,19 @@ let toast_error = (text) => {
 };
 
 //Confirm Message
-let ask_confirm = (title = "Are you sure?", btn = "Yes, save it!") => {
+let ask_confirm = (title = "Are you sure?", btn = "Yes, save it!", deny = false ) => {
     return Swal.fire({
         title: title,
         icon: "question",
+        showDenyButton: deny,
         showCancelButton: true,
         confirmButtonText: btn,
+        denyButtonText: `Cancel Order`,
+        cancelButtonText: "Close",
         customClass: {
             confirmButton: "btn btn-primary me-3 waves-effect waves-light",
             cancelButton: "btn btn-outline-secondary waves-effect",
+            denyButton: "btn btn-outline-danger waves-effect me-3",
         },
         buttonsStyling: false,
         backdrop: true,
