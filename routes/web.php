@@ -72,6 +72,7 @@ Route::group(['middleware' => ['auth', 'system-user', 'prevent-back-history'], '
         //orders
         Route::get('/orders-list', [OrderController::class, 'getOrders']);
         Route::get('/order-confirm', [OrderController::class, 'confirmOrder']);
+        Route::get('/order-cancel', [OrderController::class, 'cancelOrder']);
         Route::resource('orders', OrderController::class);
     });
 

@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Resources\OrderResource;
-use App\Models\Order;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use DataTables;
+use App\Models\User;
+use App\Models\Order;
+use App\Models\Point;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\OrderResource;
 
 class OrderController extends Controller
 {
@@ -44,7 +47,9 @@ class OrderController extends Controller
                 if($each->status == 'pending') {
                     $status_btn = "<span class='cursor-pointer bg-warning px-3 py-1 $order_confirm_status' data-status='pending' data-order_id='$each->id'>".ucwords($each->status)."</span>";
                 } elseif($each->status == 'done') {
-                    $status_btn = "<span class='cursor-pointer bg-success px-3 py-1 ' data-status='done'>".ucwords($each->status)."</span>";
+                    $status_btn = "<span class='cursor-pointer bg-success px-3 py-1 done-btn' data-status='done' data-order_id='$each->id'>".ucwords($each->status)."</span>";
+                } else {
+                    $status_btn = "<span class='cursor-pointer bg-secondary px-3 py-1 cancel-btn' data-status='cancel' data-order_id='$each->id'>".ucwords($each->status)."</span>";
                 }
                 return $status_btn;
             })
@@ -67,16 +72,95 @@ class OrderController extends Controller
     }
 
     public function confirmOrder(Request $request) {
-        if($request->order_id) {
-            if($request->status == 'pending') {
-                $order = Order::find($request->order_id);
-                if($order) {
-                    $order->status = 'done';
-                    $order->update();
+        DB::beginTransaction();
 
-                    return 'success';
+        try {
+            if($request->order_id) {
+                if($request->status == 'pending') {
+                    $order = Order::find($request->order_id);
+                    if($order) {
+                        $user = User::find($order->user_id);
+                        $bought_amount = $order->sub_total;
+                        $used_point = $order->used_point;
+                        $total_point = Point::where('user_id', $user->id)->latest()->first()->total;
+
+                        if($bought_amount && $bought_amount > 0) {
+
+                            $earn_points = round($bought_amount / 200, 1);
+
+                            $point = new Point();
+                            $point->type = 'in';
+                            $point->name = 'Point Increase';
+                            $point->reason = $user->name. ' has earned '. $earn_points. ' points for ordering';
+                            $point->points = $earn_points;
+                            $point->total = $total_point + $earn_points;
+                            $point->user_id = $user->id;
+                            $point->save();
+                        }
+
+                        $order->status = 'done';
+                        $order->bonus_point = $earn_points;
+                        $order->update();
+
+                    }
                 }
             }
+
+            DB::commit();
+            return 'success';
+        } catch(\Exception $err) {
+            DB::rollBack();
+            return $err->getMessage();
+        }
+    }
+
+    public function cancelOrder(Request $request) {
+        DB::beginTransaction();
+
+        try {
+            if($request->order_id) {
+                $order = Order::find($request->order_id);
+                    if($order) {
+                        $user = User::find($order->user_id);
+                        $bonus_point = $order->bonus_point;
+                        $used_point = $order->used_point;
+                        $total_point = Point::where('user_id', $user->id)->latest()->first()->total;
+
+                        if($used_point && $used_point > 0) {
+                            $point = new Point();
+                            $point->type = 'in';
+                            $point->name = 'Point Increase';
+                            $point->reason = $user->name. ' has reearned '. $used_point. ' points for canceling order';
+                            $point->points = $used_point;
+                            $point->total = $total_point + $used_point;
+                            $point->user_id = $user->id;
+                            $point->save();
+                        }
+
+                        if($bonus_point && $bonus_point > 0) {
+                            $new_total_point = Point::where('user_id', $user->id)->latest()->first()->total;
+                            $point = new Point();
+                            $point->type = 'out';
+                            $point->name = 'Point Decrease';
+                            $point->reason = $user->name. ' has decrease '. $bonus_point. ' points for canceling order';
+                            $point->points = $bonus_point;
+                            $point->total = $new_total_point - $bonus_point;
+                            $point->user_id = $user->id;
+                            $point->save();
+                        }
+
+                        $order->status = 'cancel';
+                        $order->bonus_point = 0;
+                        $order->update();
+
+                    }
+            }
+
+            DB::commit();
+            return 'success';
+        } catch(\Exception $err) {
+            DB::rollBack();
+            return $err->getMessage();
         }
     }
 }

@@ -69,6 +69,24 @@ $(document).ready(function() {
         })
     })
 
+    $(document).on('click', '.done-btn', function() {
+        let order_id = $(this).data('order_id');
+
+        ask_confirm("Cancel order ?", "Yes, Cancel").then(result => {
+            if(result.isConfirmed) {
+                $.ajax({
+                    url: "/admin/order_setting/order-cancel",
+                    data: {order_id},
+                    success: function(res) {
+                        if(res == 'success') {
+                            table.ajax.reload();
+                        }
+                    }
+                })
+            }
+        })
+    })
+
     $(document).on('click', '.order-detail', function() {
         let route = $(this).data('route');
 
@@ -100,7 +118,7 @@ $(document).ready(function() {
                     $('.orderDetailGroup').html(row);
                     $('.sub-total').html(numberWithCommas(order.sub_total ?? 0))
                     $('.point-discount').html('- '+ numberWithCommas(order.used_point ?? 0))
-                    $('.delivery-charges').html('- '+ numberWithCommas(order.delivery_charges))
+                    $('.delivery-charges').html('+ '+ numberWithCommas(order.delivery_charges))
                     $('.grand-total').html(numberWithCommas(order.grand_total ?? 0))
 
                     let img = '';
