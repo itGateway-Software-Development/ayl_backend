@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Requests\Api\ChangePasswordRequest;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\Point;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\OrderResource;
 use App\Http\Requests\Api\LoginRequest;
-use Illuminate\Support\Facades\Request;
 use App\Http\Requests\Api\RegisterRequest;
+use App\Http\Requests\Api\ChangePasswordRequest;
 
 class AuthController extends Controller
 {
@@ -105,5 +105,23 @@ class AuthController extends Controller
         $user->update();
 
         return response()->json(['status' => 'success', 'message' => 'Password changed']);
+    }
+
+    public function getUpdateData(Request $request) {
+        if($request->id) {
+            $point = Point::where('user_id', $request->id)->latest()->first()->total;
+            $point_history = Point::where('user_id', $request->id)->orderBy('created_at', 'desc')->get();
+            $order = Order::where('user_id', $request->id)->orderBy('created_at', 'desc')->get();
+
+            $response = [
+                'point' => $point,
+                'point_history' => $point_history,
+                'order' => OrderResource::collection($order->load('customer'))
+            ];
+
+
+            return response()->json(['status' => 'success', 'response' => $response]);
+
+        }
     }
 }

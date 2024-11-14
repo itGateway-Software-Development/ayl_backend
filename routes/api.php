@@ -23,6 +23,7 @@ Route::post('/v1/login', [AuthController::class, 'login']);
 Route::group(['middleware' => ['auth:sanctum'], 'prefix' => '/v1'], function() {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/change-password', [AuthController::class, 'changePassword']);
+    Route::post('/get-update-data', [AuthController::class, 'getUpdateData']);
 });
 
 //public routes
